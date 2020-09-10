@@ -1,13 +1,24 @@
-/**
- * If running on Nodejs 5.x and below, we load the transpiled code.
- * Otherwise, we use the ES6 code.
- * We are deprecating support for Node.js v5.x and below.
- */
-const majorVersion = parseInt(process.versions.node.split('.')[0], 10);
-if (majorVersion <= 5) {
-  const deprecate = require('depd')('node-telegram-bot-api');
-  deprecate('Node.js v5.x and below will no longer be supported in the future');
-  module.exports = require('./lib/telegram');
-} else {
-  module.exports = require('./src/telegram');
-}
+const TOKEN = process.env.TELEGRAM_TOKEN;
+const TelegramBot = require('../..');
+const options = {
+  webHook: {
+    port: 443,
+    key: `${__dirname}/../ssl/key.pem`, // Path to file with PEM private key
+    cert: `${__dirname}/../ssl/crt.pem` // Path to file with PEM certificate
+  }
+};
+// This URL must route to the port set above (i.e. 443)
+const url = 'https://<PUBLIC-URL>';
+const bot = new TelegramBot(TOKEN, options);
+
+
+// This informs the Telegram servers of the new webhook.
+bot.setWebHook(`${url}/bot${TOKEN}`, {
+  certificate: options.webHook.cert,
+});
+
+
+// Just to ping!
+bot.on('message', function onMessage(msg) {
+  bot.sendMessage(msg.chat.id, 'I am alive!');
+});
