@@ -1,0 +1,28 @@
+{
+  "name": "pogo-community-admin",
+  "version": "1.0.0",
+  "description": "Pokemon go community manager",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "node-telegram-bot-api": "^0.50.0",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sethlans/pogo-community-admin.git"
+  },
+  "keywords": [
+    "pogo"
+  ],
+  "author": "Sethlans",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sethlans/pogo-community-admin/issues"
+  },
+  "homepage": "https://github.com/Sethlans/pogo-community-admin#readme"
+}
