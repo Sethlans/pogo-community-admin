@@ -1,5 +1,6 @@
 import TelegramBot from 'node-telegram-bot-api';
 import  config  from 'dotenv';
+import {redisProvider} from './providers/redisProvider.mjs';
 config.config();
 const TOKEN = process.env.TELEGRAM_TOKEN;
 const debug = process.env.DEBUG;
@@ -30,7 +31,7 @@ else{
     const bot = new TelegramBot(TOKEN, {polling: true});
 
     bot.on('message', function onMessage(msg) {
-       console.log(msg);
+            redisProvider.set("text",msg.from.id,msg.text);
         });
    
 }

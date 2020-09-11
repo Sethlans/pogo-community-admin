@@ -1,25 +1,38 @@
-import { createClient } from "redis";
+import  redis  from "redis";
 //const REDIS_PWD = process.env.REDIS_PWD;
 
-const getClient = () => {
-    const client = createClient();
+
+
+
+ const getClient = () => {
+    const client = redis.createClient();
     //client.auth(REDIS_PWD)
     return client;
 }
 
-const setVariable = (key,value) => {
+  const set = (key,commID,value) => {
     const client = getClient();
-    client.set(key, value, function(err) {
-        console.error(err);
-      });
+    var completeKey = key+'-'+commID;
+    client.on('ready', function() {     
+        client.set(completeKey, value, function(err) {
+            if(err)
+                console.error(err);
+                
+        });
+    });
+    
 }
 
-const getVariable = (key)=>{
+ const get = (key,commID)=>{
     const client = getClient();
-    client.get(key, function(err, reply) {
-        return reply.toString();
-      });
+    var completeKey = key+'-'+commID;
+    client.on('ready', function() {
+         client.get(completeKey,function(err,reply) {
+             if(err)
+             console.log(reply);
+         });
+      });   
 }
 
 
-export default { setVariable, getVariable }
+export const redisProvider = {set,get};
