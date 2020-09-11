@@ -1,7 +1,6 @@
-const TelegramBot = require('node-telegram-bot-api');
-const dotenv = require('dotenv');
-const commonCommands = require('./commands/commons');
-dotenv.config();
+import TelegramBot from 'node-telegram-bot-api';
+import  config  from 'dotenv';
+config.config();
 const TOKEN = process.env.TELEGRAM_TOKEN;
 const debug = process.env.DEBUG;
 if(debug==0){
@@ -21,8 +20,6 @@ if(debug==0){
     bot.setWebHook(`${url}/bot${TOKEN}`, {
     certificate: options.webHook.cert,
     });
-
-    commonCommands.defineCommands(bot);
     // Just to ping!
     bot.on('message', function onMessage(msg) {
     bot.sendMessage(msg.chat.id, 'I am alive!');
@@ -31,7 +28,7 @@ if(debug==0){
 else{
     console.log(TOKEN);
     const bot = new TelegramBot(TOKEN, {polling: true});
-    commonCommands.defineCommands(bot);
+
     bot.on('message', function onMessage(msg) {
        console.log(msg);
         });

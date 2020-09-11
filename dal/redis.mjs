@@ -1,8 +1,8 @@
-const redis = require("redis");
+import { createClient } from "redis";
 //const REDIS_PWD = process.env.REDIS_PWD;
 
 const getClient = () => {
-    const client = redis.createClient();
+    const client = createClient();
     //client.auth(REDIS_PWD)
     return client;
 }
@@ -22,4 +22,4 @@ const getVariable = (key)=>{
 }
 
 
-module.exports = { setVariable, getVariable }
+export default { setVariable, getVariable }
